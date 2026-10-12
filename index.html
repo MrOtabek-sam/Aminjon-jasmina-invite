@@ -1,10 +1,23 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FAF4E8">
+<meta property="og:title" content="Aminjon & Jasmina">
+<meta property="og:description" content="19.10.2026 · 18:00 · Diyora">
+<meta property="og:image" content="https://aminjon-jasmina.vercel.app/assets/gate.webp">
+<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
 <title>Aminjon & Jasmina</title>
 <meta name="description" content="Aminjon & Jasmina — 19.10.2026, Diyora">
 <script>
 /* On a computer: show the phone version inside a phone-sized frame, over a soft blurred garden */
 (function(){
   if(window.name==="inv-phone")return;
-  if(!matchMedia("(min-width:700px) and (min-height:500px)").matches)return;
+  if(!matchMedia("(min-width:900px) and (min-height:500px) and (hover:hover) and (pointer:fine)").matches)return;
+  if(/Android|iPhone|iPad|iPod|Mobile|Telegram|Instagram|FBAN|FBAV/i.test(navigator.userAgent))return;
   var src=location.href;
   document.write('<style>html,body{margin:0;height:100%;overflow:hidden;background:#2b2621}'+
    '.dk-bg{position:fixed;inset:-40px;background:url(assets/garden.webp) center/cover;filter:blur(22px) brightness(.72) saturate(.9);transform:scale(1.08)}'+
@@ -512,3 +525,6 @@ startMusic();   // plays immediately where the browser allows sound without a ta
 vb.onclick=()=>{if(musicOn){wanted=false;stopMusic()}else{wanted=true;startMusic()}};
 document.addEventListener("visibilitychange",()=>{if(document.hidden&&musicOn){song.pause()}else if(!document.hidden&&musicOn){song.play().catch(()=>{})}});
 </script>
+
+</body>
+</html>
