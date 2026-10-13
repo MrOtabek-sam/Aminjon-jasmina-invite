@@ -184,6 +184,34 @@ p{margin:0}
 .sig{font-family:var(--f-script);font-size:clamp(40px,11.5vw,56px);line-height:1.05;white-space:nowrap}
 .sig em{font-style:normal;color:var(--rose-deep);font-size:.65em;padding:0 .12em}
 
+
+/* ---- extra motion ---- */
+.pre .frame{opacity:0;transform:perspective(900px) rotateX(14deg) translateY(40px) scale(.96)}
+.frame{transition:opacity 1.2s ease,transform 1.4s cubic-bezier(.2,.7,.2,1);transform-origin:50% 0}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;mix-blend-mode:soft-light;
+  background:linear-gradient(115deg,transparent 35%,rgba(255,236,190,.9) 48%,transparent 60%) no-repeat;background-size:250% 100%;animation:sweep 7s ease-in-out infinite}
+@keyframes sweep{0%,55%{background-position:140% 0}100%{background-position:-60% 0}}
+.ringwrap{position:relative;display:inline-block}
+.ringwrap .rings{animation:floaty 5s ease-in-out infinite}
+@keyframes floaty{50%{transform:translateY(-8px) rotate(-1.2deg)}}
+.spark{position:absolute;width:16px;height:16px;pointer-events:none;animation:twk 2.8s ease-in-out infinite}
+.spark::before,.spark::after{content:"";position:absolute;left:50%;top:50%;background:#E9CC86;border-radius:2px;transform:translate(-50%,-50%)}
+.spark::before{width:2px;height:16px}.spark::after{width:16px;height:2px}
+@keyframes twk{0%,100%{opacity:0;transform:scale(.3) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
+.arch.zoom img{animation:drift 14s ease-in-out infinite alternate}
+@keyframes drift{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.08) translate(-2%,-1.5%)}}
+#night .stage{background:#2a2a45}
+#night .stage::before{display:none}
+#night img.bg{transform-origin:50% 45%}
+#night .dusk{position:absolute;inset:0;pointer-events:none;background:linear-gradient(#1c2147 0%,#3a3466 30%,rgba(120,90,130,.55) 55%,rgba(40,30,50,.35) 100%);mix-blend-mode:multiply;opacity:0}
+#night .glow{position:absolute;left:50%;top:40%;width:80%;height:22%;transform:translate(-50%,-50%);pointer-events:none;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(255,200,120,.75),rgba(255,180,90,.25) 45%,transparent 70%);mix-blend-mode:screen;opacity:0}
+#night canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#night .line{top:16%}
+#night .line b{color:#FFF6E6;text-shadow:0 2px 24px rgba(20,16,40,.7)}
+#night .line small{color:#F3D9A4}
+#night .line::before,#night .line::after{background:linear-gradient(90deg,transparent,#E9CC86,transparent)}
+#night .prog{background:rgba(255,255,255,.2)}#night .prog i{background:#F3D9A4}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}
@@ -242,7 +270,7 @@ p{margin:0}
   <!-- 3. countdown with rings -->
   <section class="page" id="count">
     <div class="plain">
-      <img class="rings rv" src="assets/rings.webp" alt="">
+      <div class="ringwrap rv"><img class="rings" src="assets/rings.webp" alt=""><i class="spark" style="left:30%;top:42%"></i><i class="spark" style="left:58%;top:30%;animation-delay:.9s"></i><i class="spark" style="left:46%;top:62%;animation-delay:1.7s"></i><i class="spark" style="left:70%;top:52%;animation-delay:2.3s"></i></div>
       <div class="kick dash rv d1" data-t="counting"></div>
       <div class="count rv d2">
         <div><b id="cd0">00</b><small data-t="cdD"></small></div><span class="dot"></span>
@@ -251,6 +279,16 @@ p{margin:0}
         <div><b id="cd3">00</b><small data-t="cdS"></small></div>
       </div>
       <svg class="rule rv d3" viewBox="0 0 120 9"><path d="M0 4.5H50M70 4.5H120" stroke="currentColor"/><path d="M60 0.5L64 4.5L60 8.5L56 4.5Z" fill="currentColor"/></svg>
+    </div>
+  </section>
+
+  <!-- evening fireworks over the manor -->
+  <section class="film" id="night">
+    <div class="stage">
+      <img class="bg" id="nightImg" src="assets/garden.webp" alt="">
+      <div class="dusk"></div><div class="glow"></div><canvas id="nightCv"></canvas>
+      <div class="line"><b data-t="n1"></b><small data-t="n1s"></small></div>
+      <div class="prog"><i></i></div>
     </div>
   </section>
 
@@ -307,7 +345,7 @@ p{margin:0}
 <script>
 const DATE=new Date("2026-10-19T18:00:00+05:00"),FRAMES=100;
 const T={
- ru:{music:"Музыка",open:"Открыть приглашение",guest:"Дорогие гости",kicker:"Свадебное приглашение",
+ ru:{music:"Музыка",n1:"Праздник начинается",n1s:"19 октября · 18:00",open:"Открыть приглашение",guest:"Дорогие гости",kicker:"Свадебное приглашение",
    lead:"С радостью приглашаем Вас разделить с нами самый счастливый день — день нашей свадьбы.",
    w1:"Две судьбы",w2:"Одна любовь",w3:"Один особенный день",w3s:"19 октября 2026",
    counting:"Дни считаются",cdD:"дней",cdH:"часов",cdM:"минут",cdS:"секунд",
@@ -320,7 +358,7 @@ const T={
    monthsG:["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"],
    dows:["Пн","Вт","Ср","Чт","Пт","Сб","Вс"],dowFull:["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"],
    fmt:(d,m,y,o)=>`${d} ${o.monthsG[m]} ${y}`,and:"и",at:"в восемнадцать часов"},
- en:{music:"Music",open:"Open the invitation",guest:"Dear guests",kicker:"Wedding invitation",
+ en:{music:"Music",n1:"Let the celebration begin",n1s:"19 October · 6 pm",open:"Open the invitation",guest:"Dear guests",kicker:"Wedding invitation",
    lead:"We joyfully invite you to share with us the happiest day of our lives — our wedding day.",
    w1:"Two hearts",w2:"One love",w3:"One special day",w3s:"19 October 2026",
    counting:"Counting the days",cdD:"days",cdH:"hours",cdM:"min",cdS:"sec",
@@ -332,7 +370,7 @@ const T={
    months:["January","February","March","April","May","June","July","August","September","October","November","December"],
    dows:["Mo","Tu","We","Th","Fr","Sa","Su"],dowFull:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
    fmt:(d,m,y,o)=>`${d} ${o.months[m]} ${y}`,and:"and",at:"at six p.m."},
- uz:{music:"Musiqa",open:"Taklifnomani ochish",guest:"Aziz mehmonlar",kicker:"Nikoh toʻyi taklifnomasi",
+ uz:{music:"Musiqa",n1:"Bayram boshlanadi",n1s:"19-oktabr · 18:00",open:"Taklifnomani ochish",guest:"Aziz mehmonlar",kicker:"Nikoh toʻyi taklifnomasi",
    lead:"Farzandlarimizning nikoh toʻyi munosabati bilan oʻtkazilayotgan shodiyona toʻy marosimimizga sizni chin qalbimizdan taklif etamiz.",
    w1:"Ikki taqdir",w2:"Bir muhabbat",w3:"Bir unutilmas kun",w3s:"19-oktabr 2026",
    counting:"Kunlar sanalmoqda",cdD:"kun",cdH:"soat",cdM:"daqiqa",cdS:"soniya",
@@ -472,6 +510,24 @@ addEventListener("resize",()=>{size(wcv);lastW=-1});
 if("IntersectionObserver" in window){new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){loadCouple();o.disconnect()}},{rootMargin:"1500px"}).observe($("#walk"))}else loadCouple();
 size(wcv);
 
+/* ================= evening fireworks scene ================= */
+const night=$("#night"),nImg=$("#nightImg"),nDusk=$("#night .dusk"),nGlow=$("#night .glow"),nLine=$("#night .line"),nBar=$("#night .prog i"),ncv=$("#nightCv"),nc=ncv.getContext("2d");
+let nW,nH,nSP=[],nOn=false,nLast=0,nP=0;
+function nSize(){const r=ncv.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1);nW=r.width;nH=r.height;ncv.width=nW*d;ncv.height=nH*d;nc.setTransform(d,0,0,d,0,0)}
+nSize();addEventListener("resize",nSize);
+const NCOL=["255,214,140","255,236,200","246,180,190","255,200,120","220,190,255"];
+function nBurst(){const x=nW*(.15+Math.random()*.7),y=nH*(.3+Math.random()*.16),col=NCOL[Math.floor(Math.random()*NCOL.length)],n=60+Math.random()*50,ring=Math.random()<.35;
+  for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,v=ring?3.6:.8+Math.random()*3.8;nSP.push({x,y,px:x,py:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,d:.007+Math.random()*.009,c:Math.random()<.25?"255,255,255":col})}}
+function nLoop(t){if(!nOn){nc.clearRect(0,0,nW,nH);return}
+  if(nP>.28&&!reduce&&t-nLast>(nP>.6?420:750)){nLast=t;nBurst()}
+  nc.globalCompositeOperation="source-over";nc.clearRect(0,0,nW,nH);nc.globalCompositeOperation="lighter";
+  for(let i=nSP.length-1;i>=0;i--){const p=nSP[i];p.px=p.x;p.py=p.y;p.vx*=.976;p.vy=p.vy*.976+.04;p.x+=p.vx;p.y+=p.vy;p.l-=p.d;if(p.l<=0){nSP.splice(i,1);continue}
+    nc.strokeStyle=`rgba(${p.c},${p.l})`;nc.lineWidth=2;nc.beginPath();nc.moveTo(p.px-(p.x-p.px)*2,p.py-(p.y-p.py)*2);nc.lineTo(p.x,p.y);nc.stroke()}
+  requestAnimationFrame(nLoop)}
+if("IntersectionObserver" in window)new IntersectionObserver(es=>{const v=es[0].isIntersecting;if(v&&!nOn){nOn=true;nSize();requestAnimationFrame(nLoop)}else if(!v)nOn=false},{threshold:0}).observe(night);
+function drawNight(){const q=fp(night);nP=q;nImg.style.transform=`scale(${1.08+q*.3})`;nDusk.style.opacity=Math.min(1,q*1.8);nGlow.style.opacity=seg(q,.2,.6)*.9;
+  nLine.style.opacity=fade(q,.3,.42,.9,1);nBar.style.width=q*100+"%"}
+
 /* ================= scroll films ================= */
 const fp=el=>{const r=el.getBoundingClientRect();return Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)))};
 const seg=(p,a,b)=>Math.min(1,Math.max(0,(p-a)/(b-a))),fade=(p,a,b,c,d)=>Math.min(seg(p,a,b),1-seg(p,c,d));
@@ -479,6 +535,7 @@ const walk=$("#walk"),wL=$$("#walk .line"),wW=$("#walk .wash"),wB=$("#walk .prog
 function onScroll(){
   const p=fp(walk);drawWalk(p);wW.style.opacity=seg(p,.88,1);
   wL[0].style.opacity=fade(p,.04,.12,.24,.32);wL[1].style.opacity=fade(p,.32,.4,.52,.6);wL[2].style.opacity=fade(p,.6,.68,.9,.98);wB.style.width=p*100+"%";
+  drawNight();
   const q=fp(fin);if(fl){const f=near(Math.round((1-seg(q,.1,.8))*(FRAMES-1)));if(f>=0&&f!==lastF){lastF=f;cover(fcv,fctx,frames[f])}}
   fL[0].style.opacity=fade(q,.1,.2,.42,.52);fL[1].style.opacity=fade(q,.58,.7,1.1,1.2);fB.style.width=q*100+"%";
 }
