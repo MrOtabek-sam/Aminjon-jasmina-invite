@@ -152,7 +152,7 @@ p{margin:0}
 
 /* venue */
 .arch{width:min(280px,72vw);aspect-ratio:3/4;border-radius:999px 999px 6px 6px;overflow:hidden;position:relative;box-shadow:0 0 0 6px var(--paper),0 0 0 7px rgba(184,151,94,.6)}
-.arch img{width:100%;height:100%;object-fit:cover;object-position:50% 45%;transform:scale(1.15);transition:transform 6s ease}
+.arch img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;transform:scale(1.15);transition:transform 6s ease}
 .arch.zoom img{transform:scale(1)}
 .vname{font-size:30px;font-weight:500;line-height:1.15}
 .vsub{font-size:18px;font-style:italic;color:var(--muted)}
@@ -161,14 +161,17 @@ p{margin:0}
 .film{position:relative;height:320vh}
 .film .stage{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--paper)}
 #walkImg{transform-origin:50% 62%}
-#finale .line{top:30%}
+#finale .line{top:17%}
 #dateFrame{gap:10px;padding-bottom:36%}
 #dateFrame .btn{padding:9px 16px;font-size:12px}
 #dateFrame .cal{max-width:270px}
 .film img.bg,.film canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform}
 .film .veil{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 38%,rgba(243,234,219,.0) 30%,rgba(243,234,219,.35) 85%);pointer-events:none}
 .film .wash{position:absolute;inset:0;background:var(--paper);opacity:0;pointer-events:none}
-.film .line{position:absolute;left:50%;top:17%;width:max-content;max-width:calc(100% - 32px);text-align:center;transform:translate(-50%,-50%);opacity:0;pointer-events:none;padding:16px 28px 18px;border-radius:28px;background:rgba(250,244,232,.86);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 12px 36px -14px rgba(58,48,42,.35),inset 0 0 0 1px rgba(184,151,94,.35)}
+.film .line{position:absolute;left:16px;right:16px;top:15%;text-align:center;transform:translateY(-50%);opacity:0;pointer-events:none;z-index:3}
+.film .line::before,.film .line::after{content:"";display:block;width:110px;height:1px;margin:0 auto;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.film .line::before{margin-bottom:14px}.film .line::after{margin-top:14px}
+.film .stage::before{content:"";position:absolute;left:0;right:0;top:0;height:46%;z-index:2;pointer-events:none;background:linear-gradient(rgba(250,244,232,.97) 0%,rgba(250,244,232,.88) 45%,rgba(250,244,232,0))}
 .film .line b{display:block;font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:clamp(46px,13.5vw,66px);line-height:1.1;color:var(--ink);}
 .film .line small{display:block;margin-top:10px;font-size:15px;letter-spacing:.34em;text-transform:uppercase;font-style:italic;color:var(--rose-deep)}
 .film .prog{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);transform:translateX(-50%);width:80px;height:1px;background:rgba(58,48,42,.2);overflow:hidden}
@@ -265,7 +268,7 @@ p{margin:0}
   <section class="page" id="venue">
     <div class="plain">
       <div class="kick dash rv" data-t="venueKicker"></div>
-      <div class="arch rv d1" id="archPic"><img src="assets/hall.webp" alt=""></div>
+      <div class="arch rv d1" id="archPic"><img src="assets/diyora.webp" alt="Diyora"></div>
       <div class="rv d2"><div class="vname" data-t="venueName"></div><div class="vsub" data-t="venueCity"></div></div>
       <div class="row rv d3">
         <a class="btn solid" href="https://maps.app.goo.gl/JcrNAroWsLTbsdQMA" target="_blank" rel="noopener">Google Maps</a>
@@ -310,7 +313,7 @@ const T={
    counting:"Дни считаются",cdD:"дней",cdH:"часов",cdM:"минут",cdS:"секунд",
    dateKicker:"Дата торжества",addCal:"Добавить в календарь",
    venueKicker:"Место торжества",venueName:"Ресторан «Диёра»",venueCity:"Самарканд",yandex:"Яндекс Карты",
-   hosts:"С любовью и уважением, семьи",fam1:"Хазраткуловых",fam2:"Муридиллаевых",
+   hosts:"С любовью и уважением, семьи",fam1:"Ачиловых",fam2:"Гадаевых",
    closing:"Ваше присутствие сделает этот вечер по-настоящему тёплым и незабываемым.",
    f1:"Ждём Вас",f2s:"19 октября · 18:00",calTitle:"Свадьба Аминжона и Жасмины",
    months:["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
@@ -323,7 +326,7 @@ const T={
    counting:"Counting the days",cdD:"days",cdH:"hours",cdM:"min",cdS:"sec",
    dateKicker:"Save the date",addCal:"Add to calendar",
    venueKicker:"Venue",venueName:"Diyora Restaurant",venueCity:"Samarkand",yandex:"Yandex Maps",
-   hosts:"With love and respect, the families",fam1:"Khazratkulov",fam2:"Muridillayev",
+   hosts:"With love and respect, the families",fam1:"Achilov",fam2:"Gadayev",
    closing:"Your presence will make this evening truly warm and unforgettable.",
    f1:"We await you",f2s:"19 October · 6 pm",calTitle:"Aminjon & Jasmina's wedding",
    months:["January","February","March","April","May","June","July","August","September","October","November","December"],
@@ -335,7 +338,7 @@ const T={
    counting:"Kunlar sanalmoqda",cdD:"kun",cdH:"soat",cdM:"daqiqa",cdS:"soniya",
    dateKicker:"Toʻy sanasi",addCal:"Kalendarga qoʻshish",
    venueKicker:"Toʻy manzili",venueName:"«Diyora» restorani",venueCity:"Samarqand",yandex:"Yandex Xarita",
-   hosts:"Hurmat va muhabbat bilan",fam1:"Hazratqulovlar",fam2:"Muridillayevlar oilasi",
+   hosts:"Hurmat va muhabbat bilan",fam1:"Achilovlar",fam2:"Gadayevlar oilasi",
    closing:"Sizning ishtirokingiz bu oqshomni yanada iliq va unutilmas qiladi.",
    f1:"Sizni kutamiz",f2s:"19-oktabr · 18:00",calTitle:"Aminjon va Jasminaning toʻyi",
    months:["Yanvar","Fevral","Mart","Aprel","May","Iyun","Iyul","Avgust","Sentabr","Oktabr","Noyabr","Dekabr"],
